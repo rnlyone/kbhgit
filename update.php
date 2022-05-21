@@ -33,10 +33,10 @@ try {
     
             try {
                 $query = $conn->query($sql);
-                if($query === false) {
-                    echo "Query failed: " . mysqli_error($conn);
-                    exit;
-                }
+                // if($query === false) {
+                //     echo "Query failed: " . mysqli_error($conn);
+                //     exit;
+                // }
                 header('Location:'.$_SERVER['HTTP_REFERER'].'&status="Sukses"');
             } catch (\Throwable $th) {
                 header('Location:'.$_SERVER['HTTP_REFERER'].'&status="Update Gagal" ('.$th.')');
