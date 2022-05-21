@@ -23,7 +23,7 @@ $conn = new mysqli("localhost",$_SESSION['dbuser'] , $_SESSION['dbpass'] , $_SES
 // // // Check connection
 if (!$conn) {
   die("Connection failed: " . $conn->connect_error);
-  // $die = "Connection Failed ".mysqli_connect_error();
+  $die = "Connection Failed ".$conn->connect_error;
   header('Location:index.php?die='.$die);
 } else {
   if( !isset($database) && !isset($username) ){

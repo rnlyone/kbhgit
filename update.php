@@ -1,6 +1,6 @@
 <?php
 
-require_once('conn.php');
+include_once('conn.php');
 
 try {
     $count = count($_POST);
