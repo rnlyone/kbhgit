@@ -1,13 +1,52 @@
 <?php
 // print_r($_POST['dbuser']);
-$servername = "localhost";
-$database = "yoctobra_jurnalx";
-$username = "yoctobra_articlecheck";
-$password = "AQW9ej(w87C:7i";
-
-// ($database, $username, $password);
+session_start();
+if( isset($_POST['dbname']) && isset($_POST['dbuser']) && isset($_POST['dbpass']) ){
+  $servername = "localhost";
+  $database = $_POST['dbname'];
+  $username = $_POST['dbuser'];
+  $password = $_POST['dbpass'];  
+  
+  $_SESSION['dbname'] = $database;
+  $_SESSION['dbuser'] = $username;
+  $_SESSION['dbpass'] = $password;
+  
+}
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $database);
+
+$conn = new mysqli("localhost",$_SESSION['dbuser'] , $_SESSION['dbpass'] , $_SESSION['dbname']);
+
+
+
+
+// // // Check connection
+if (!$conn) {
+  die("Connection failed: " . $conn->connect_error);
+  // $die = "Connection Failed ".mysqli_connect_error();
+  header('Location:index.php?die='.$die);
+} else {
+  if( !isset($database) && !isset($username) ){
+    $database = $_SESSION['dbname'];
+    $username = $_SESSION['dbuser'];
+  }
+  $sql = "select * from user_database where dbname='$database'";
+  
+  try{
+    $result = $conn->query($sql);
+  }catch(\Throwable $th){
+    $result = null;
+    echo $th;
+  }
+  
+  // foreach($result as $val){
+  //   if($val['dbname'] == $database && $val['dbuser'] == $username){
+  //     $message = "Connected Successfully";
+  //     if($page != "logging"){
+  //       header('Location:logging.php?message='.$message);
+  //     }
+  //   }
+  // }
+}
 
 ?>

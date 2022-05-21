@@ -38,7 +38,7 @@ include_once('app/app.php');
             <h6 class="m-0 font-weight-bold text-primary">Database Connection</h6>
         </div>
         <div class="card-body">
-            <form method="POST" action="save.php">
+            <form method="POST" action="logging.php">
                 <div class="form-group">
                     <label for="databasename">Database Name</label>
                     <input type="text" name="dbname" class="form-control" id="databasename" aria-describedby="databasename">
