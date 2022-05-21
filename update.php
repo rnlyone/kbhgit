@@ -1,6 +1,6 @@
 <?php
 
-include_once('connlite.php');
+require_once('connlite.php');
 
 try {
     $count = count($_POST);
