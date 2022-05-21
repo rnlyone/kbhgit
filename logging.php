@@ -1,6 +1,6 @@
 <?php
 $page = "logging";
-require_once('conn.php');
+include_once('conn.php');
 
 $articcode = $_GET['articcode'] ?? '0';
 $sql = "select 'email_log' as tabel, log_id, DATE_FORMAT(date_sent, '%Y-%m-%dT%H:%i:%s') as data1, body as data2 from email_log where assoc_id = ".$articcode." UNION ALL ";
