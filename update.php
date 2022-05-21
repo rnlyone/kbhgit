@@ -1,6 +1,6 @@
 <?php
 
-require_once('connlite.php');
+require_once('conn.php');
 
 try {
     $count = count($_POST);
@@ -33,7 +33,7 @@ try {
     
             try {
                 $query = $conn->query($sql);
-                $check = $query === false;
+                $check = $conn -> stat();
                 if($query === false) {
                     echo "Query failed: " . mysqli_error($conn);
                     exit;
