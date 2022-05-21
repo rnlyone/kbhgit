@@ -15,7 +15,7 @@ if( isset($_POST['dbname']) && isset($_POST['dbuser']) && isset($_POST['dbpass']
 
 // Create connection
 
-$conn = new mysqli("localhost",$_SESSION['dbuser'] , $_SESSION['dbpass'] , $_SESSION['dbname']);
+$conn = new mysqli("localhost", $_SESSION['dbuser'] , $_SESSION['dbpass'] , $_SESSION['dbname']);
 
 
 

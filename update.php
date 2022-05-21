@@ -35,7 +35,7 @@ try {
                 $query = $conn->query($sql);
                 $check = $conn -> stat();
                 if($query === false) {
-                    echo $conn->error . $conn->errno;
+                    echo $conn->error . $conn->errno . $sql;
                     exit;
                 }
                 header('Location:'.$_SERVER['HTTP_REFERER'].'&status="'.$check.'"');
