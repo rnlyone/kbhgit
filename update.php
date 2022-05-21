@@ -36,7 +36,7 @@ try {
                 $check = $conn -> stat();
                 if($query === false) {
                     echo "Query failed: " . $conn -> connect_error;
-                    exit;
+                    // exit;
                 }
                 header('Location:'.$_SERVER['HTTP_REFERER'].'&status="'.$check.'"');
             } catch (\Throwable $th) {
