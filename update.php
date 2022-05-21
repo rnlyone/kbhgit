@@ -35,7 +35,7 @@ try {
                 $query = $conn->query($sql);
                 $check = $conn -> stat();
                 if($query === false) {
-                    echo "Query failed: " . $mysqli -> error;
+                    echo "Query failed: " . $conn -> error;
                     exit;
                 }
                 header('Location:'.$_SERVER['HTTP_REFERER'].'&status="'.$check.'"');
