@@ -30,14 +30,6 @@ if (!$conn) {
     $database = $_SESSION['dbname'];
     $username = $_SESSION['dbuser'];
   }
-  $sql = "select * from user_database where dbname='$database'";
-  
-  try{
-    $result = $conn->query($sql);
-  }catch(\Throwable $th){
-    $result = null;
-    echo $th;
-  }
   
   // foreach($result as $val){
   //   if($val['dbname'] == $database && $val['dbuser'] == $username){
