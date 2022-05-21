@@ -1,5 +1,10 @@
 // Call the dataTables jQuery plugin
 $(document).ready(function() {
-  $('#dataTable').DataTable();
-  order: [[2, 'asc']];
+  $('#dataTable').DataTable({
+
+    order: [[1, 'asc']],
+    "aLengthMenu": [100],
+  }
+  );
+  
 });

@@ -3,28 +3,32 @@
 include_once('conn.php');
 
 try {
-    $count = count($_POST['id']);
-    for($i = 0; $i < $count; $i++) {
-        // print_r($_POST['table_name'][1]);
-        $table = $_POST['table_name'][$i];
-        $id = $_POST['id'][$i];
-        $data1 = $_POST['data1'][$i];
-        $data2 = $_POST['data2'][$i];
-
-        // echo "\n".$table.$id.$data1.$data2;
+    $count = count($_POST);
+    foreach($_POST['isi']['id'] as $key => $val) {
+        // print_r($_POST['isi']['tabel']);
+        $tabell = $_POST['isi']['tabel'][$key];
+        $id = $_POST['isi']['id'][$key];
+        $data1 = $_POST['isi']['data1'][$key];
+        $data2 = $_POST['isi']['data2'][$key];
+        
     
         try {
-            str_replace('T', ' ', $data1);
-            $date = $data1;
-            if ($table = 'email_log') {
-                $sql = "UPDATE ".$table." SET date_sent = '".$date."', body = '".$data2."' where log_id ='".$id."'";
+            $data1 = str_replace('T', ' ', $data1);
+            if ($tabell == 'email_log') {
+                $sql = "UPDATE email_log SET date_sent = '".$data1."', body = '".$data2."' where log_id ='".$id."'";
                 
-            } else if ($table = 'event_log') {
-                $sql = "UPDATE ".$table." SET date_logged = '".$date."', message = '".$data2."' where log_id ='".$id."'";
+                // $query = $conn->query($sql);
                 
-            } else if ($table = 'submissions') {
-                str_replace('T', ' ', $data2);
-                $sql = "UPDATE ".$table." SET date_submitted = '".$date."', date_status_modified = '".$data2."' where submission_id ='".$id."'";
+            } else if ($tabell == 'event_log') {
+                $sql = "UPDATE event_log SET date_logged = '".$data1."', message = '".$data2."' where log_id ='".$id."'";
+                // $query = $conn->query($sql);
+                
+                
+            } else if ($tabell == 'submissions') {
+                $data2 = str_replace('T', ' ', $data2);
+                $sql = "UPDATE submissions SET date_submitted = '".$data1."', date_status_modified = '".$data2."' where submission_id ='".$id."'";
+                // echo $sql;
+                // $query = $conn->query($sql);
             }
     
             try {

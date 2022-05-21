@@ -3,13 +3,14 @@ $page = "logging";
 include_once('conn.php');
 
 $articcode = $_GET['articcode'] ?? '0';
-$sql = "select 'email_log' as table_name, log_id, DATE_FORMAT(date_sent, '%Y-%m-%dT%H:%i:%s') as data1, body as data2 from email_log where assoc_id = ".$articcode." UNION ALL ";
-$sql2 = "select 'event_log' as table_name, log_id,  DATE_FORMAT(date_logged, '%Y-%m-%dT%H:%i:%s') as data1, message as data2 from event_log where assoc_id =".$articcode." UNION ALL ";
-$sql3 = "select 'submissions' as table_name, submission_id as log_id, DATE_FORMAT(date_submitted, '%Y-%m-%dT%H:%i:%s') as data1, DATE_FORMAT(date_status_modified, '%Y-%m-%dT%H:%i:%s') as data2 from submissions where submission_id =".$articcode;
+$sql = "select 'email_log' as tabel, log_id, DATE_FORMAT(date_sent, '%Y-%m-%dT%H:%i:%s') as data1, body as data2 from email_log where assoc_id = ".$articcode." UNION ALL ";
+$sql2 = "select 'event_log' as tabel, log_id,  DATE_FORMAT(date_logged, '%Y-%m-%dT%H:%i:%s') as data1, message as data2 from event_log where assoc_id =".$articcode." UNION ALL ";
+$sql3 = "select 'submissions' as tabel, submission_id as log_id, DATE_FORMAT(date_submitted, '%Y-%m-%dT%H:%i:%s') as data1, DATE_FORMAT(date_status_modified, '%Y-%m-%dT%H:%i:%s') as data2 from submissions where submission_id =".$articcode;
 
 try {
     $query = $conn->query($sql.$sql2.$sql3);
     // echo $query->fetch_assoc();
+    // echo $sql.$sql2.$sql3;
 } catch (\Throwable $th) {
     $query = null;
     $query2 = null;
@@ -68,16 +69,16 @@ include_once('app/app.php');
                             <th>Data 2</th>
                         </tr>
                     </thead>
-                    
+                    <?php $i=0; ?>
                     <tbody>
                             <?php foreach ($query as $key => $val) { ?>
                             <tr class="
                             <?php 
-                                if ($val['table_name'] == 'email_log') {
+                                if ($val['tabel'] == 'email_log') {
                                     ?>table-primary<?php
-                                } else if ($val['table_name'] == 'event_log') {
+                                } else if ($val['tabel'] == 'event_log') {
                                     ?>table-info<?php
-                                } else if ($val['table_name'] == 'submissions'){
+                                } else if ($val['tabel'] == 'submissions'){
                                     ?>table-warning<?php
                                 }
                             ?>
@@ -85,7 +86,7 @@ include_once('app/app.php');
                                 <?php  
                                 
                                 $id = $val['log_id'];
-                                $table = $val['table_name'];
+                                $table = $val['tabel'];
                                 $data1 = $val['data1'];
                                 $data2 = $val['data2'];
 
@@ -93,19 +94,19 @@ include_once('app/app.php');
 
                                 ?>
                                 
-                                <td><?php print_r($val['log_id']) ?><input type="text" name="id[<?php $key ?>]" value="<?php print_r($val['log_id']) ?>" hidden>
-                                <input type="text" name="table_name[<?php $key ?>]" value="<?php print_r($val['table_name']) ?>" hidden></td>
-                                <td><?php print_r($val['data1']) ?><br><input type="datetime-local" name="data1[<?php $key ?>]" value="<?php print_r($val['data1']) ?>" id="iddate"></td>
+                                <td><?php print_r($val['log_id']) ?><input type="text" name="isi[id][<?php echo $i ?>]" value="<?php echo $id ?>" hidden>
+                                <input type="text" name="isi[tabel][<?php echo $i ?>]" value="<?php echo $table ?>"hidden></td>
+                                <td><?php print_r($val['data1']) ?><br><input type="datetime-local" name="isi[data1][<?php echo $i ?>]" value="<?php echo $data1 ?>" id="iddate"></td>
                                 <td>
-                                    <?php if ($val['table_name'] != 'submissions') {?>
-                                    <textarea class="form-control" name="data2[<?php $key ?>]" type="text"><?php print_r($val['data2']) ?></textarea>
+                                    <?php if ($val['tabel'] != 'submissions') {?>
+                                    <textarea class="form-control" name="isi[data2][<?php echo $i ?>]" type="text"><?php echo $data2 ?></textarea>
                                     <?php } else { ?>
-                                        <input type="datetime-local" name="data2[<?php $key ?>]" value="<?php print_r($val['data2']) ?>" id="iddate2">
+                                        <input type="datetime-local" name="isi[data2][<?php echo $i ?>]" value="<?php echo $data2 ?>" id="iddate2">
                                     <?php } ?>
                                 </td>
                                 
                             </tr>
-                            <?php }?>
+                            <?php $i++; }?>
                     </tbody>
                 </table>
                 <div class="mt-5">
