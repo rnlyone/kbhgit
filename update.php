@@ -15,12 +15,18 @@ try {
         try {
             $data1 = str_replace('T', ' ', $data1);
             if ($tabell == 'email_log') {
-                $sql = "UPDATE email_log SET date_sent = '".$data1."', body = '".$data2."' where log_id ='".$id."'";
+                $stmt = "UPDATE email_log SET date_sent =?, body =? where log_id =?";
+                $stmt = $conn->prepare($stmt);
+                $stmt->bind_param('ssi', $data1, $data2, $id);
+                // $sql = "UPDATE email_log SET date_sent = '".$data1."', body = '".$data2."' where log_id ='".$id."'";
                 
                 // $query = $conn->query($sql);
                 
             } else if ($tabell == 'event_log') {
-                $sql = "UPDATE event_log SET date_logged = '".$data1."', message = '".$data2."' where log_id ='".$id."'";
+                $stmt = "UPDATE event_log SET date_logged =?, message=? where log_id =?";
+                $stmt = $conn->prepare($stmt);
+                $stmt->bind_param('ssi', $data1, $data2, $id);
+                // $sql = "UPDATE event_log SET date_logged = '".$data1."', message = '".$data2."' where log_id ='".$id."'";
                 // $query = $conn->query($sql);
                 
                 
